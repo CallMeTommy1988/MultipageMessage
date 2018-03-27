@@ -18,6 +18,7 @@
   "homepage": "https://github.com/CallMeTommy1988/MultipageMessage#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "express-ws": "^3.0.0"
+    "express-ws": "^3.0.0",
+    "store": "^2.0.12"
   }
 }
