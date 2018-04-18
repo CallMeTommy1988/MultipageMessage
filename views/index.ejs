@@ -1,0 +1,27 @@
+<html id="html">
+  <meta charset="utf-8">
+  <title>新标签页</title>
+  
+  <body id="body">
+    <h2></h2>
+    跨页面
+  </body>
+</html>
+
+<script src="/index.js"></script>
+<script>
+    let ws = new WebSocket("ws://localhost:3000/ws");
+      ws.onmessage=function(e){  
+        console.log(e.data);  
+      };  
+      ws.onerror=function(err){  
+        console.log('_error');  
+        console.log(err);  
+      };  
+      ws.onopen=function(){  
+        console.log('_connect')  
+      };  
+      ws.onclose=function(){  
+        console.log('_close');  
+      };  
+</script>
