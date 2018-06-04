@@ -1,11 +1,10 @@
 
 const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 
     entry: './src/index.ts',
-
+    mode: "development",
     output: {
         filename: 'tCommunication.js',
         path: path.resolve(__dirname, 'dist'),
@@ -16,8 +15,16 @@ module.exports = {
         extensions: ['.webpack.js', '.web.js', '.ts', '.js', '.css']
     },
 
+    externals: {
+        "jj": {
+            commonjs: "jQuery",
+            amd: "jQuery",
+            root: "$"
+        }
+    },
+
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.ts$/,
                 loader: 'ts-loader'

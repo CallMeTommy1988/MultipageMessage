@@ -1,41 +1,53 @@
 
 
-import { RequestType } from "./enums";
+import { RequestType, Result } from "./enums";
 
 
 /* -------------- option -------------- */
 export interface TimerOptions {
     interval?: number;
     maxTime?: number;
-    autoTime? : boolean;
-    autoTimeInterval? : number;
+    autoTime?: boolean;
+    autoTimeInterval?: number;
 }
 
 
 export interface AccessOptions {
     url: AccessUrlOptions;
-    now? : boolean;
+    now?: boolean;
 }
 
 export interface AccessUrlOptions {
-    address:string;
-    type:RequestType;
+    address: string;
+    type: RequestType;
+    method?: string;
+    data?: {}
 }
 
-export interface Options extends TimerOptions {
-
+export interface ajaxOptions {
+    method?: string;
+    url?: string;
+    async?: boolean;
+    data?: {};
+    success?: Function;
+    error?: Function;
 }
 
 /* -------------- communication -------------- */
 
 export interface ICommunication {
-    
+
 }
 
 
 /* -------------- common -------------- */
 
 export interface IListener {
-    addListener(func:Function);
-    removeLinstener(func:Function);
+    addListener(func: Function);
+    removeLinstener(func: Function);
+}
+
+export interface IResult {
+    status: Result;
+    data: any
 }

@@ -8,13 +8,16 @@
  */
 
 import access from "./access";
-import { AccessOptions, TimerOptions } from "./interface";
+import { AccessOptions, TimerOptions, IResult } from "./interface";
 import { Timer } from "./timer";
+import { ajax } from "./ajax";
+import { Result } from "./enums";
 
 export class ajaxAccess extends access {
 
     private t: Timer;
-    constructor(accessOptions:AccessOptions,timerOptions:TimerOptions) {
+    static readonly lv = 5;
+    constructor(accessOptions: AccessOptions, timerOptions: TimerOptions) {
 
         super(accessOptions);
 
@@ -24,15 +27,35 @@ export class ajaxAccess extends access {
     }
 
     private timerhandler() {
-        if(!this._listeners.length)
+        if (!this._listeners.length)
             return;
-        
 
+        this.data().then((r: IResult) => {
+            for (let listener of this._listeners) {
+                listener(r);
+            }
+        });
     }
 
-    private data(): Promise<any>
-    {
-        return new Promise(null);
+    private data(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            ajax({
+                url: this.options.url.address,
+                method: this.options.url.method,
+                data: this.options.url.data,
+                success: (data) => {
+                    resolve({
+                        status: Result.success,
+                        data: data
+                    });
+                },
+                error: (err) => {
+                    reject({
+                        status: Result.error,
+                        data: err
+                    });
+                }
+            });
+        });
     }
-
 }
