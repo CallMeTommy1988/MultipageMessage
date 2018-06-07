@@ -33,10 +33,18 @@ export interface ajaxOptions {
     error?: Function;
 }
 
+export interface webscoketOptions {
+    url?: string;
+    data?: {},
+    success?: Function;
+    error?: Function;
+}
+
 /* -------------- communication -------------- */
 
 export interface ICommunication {
-
+    ajaxOptions: ajaxOptions;
+    webscoketOptions: webscoketOptions;
 }
 
 
