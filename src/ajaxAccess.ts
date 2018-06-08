@@ -7,16 +7,16 @@
  * @created: 2018.6.2
  */
 
-import access from "./access";
+import Access from "./access";
 import { AccessOptions, TimerOptions, IResult } from "./interface";
 import { Timer } from "./timer";
 import { ajax } from "./ajax";
 import { Result } from "./enums";
 
-export class ajaxAccess extends access {
+export class AjaxAccess extends Access {
 
     private t: Timer;
-    static readonly lv = 5;
+    
     constructor(accessOptions: AccessOptions, timerOptions: TimerOptions) {
 
         super(accessOptions);
@@ -29,6 +29,9 @@ export class ajaxAccess extends access {
     private timerhandler() {
         if (!this._listeners.length)
             return;
+
+        //写入数据
+        
 
         this.data().then((r: IResult) => {
             for (let listener of this._listeners) {

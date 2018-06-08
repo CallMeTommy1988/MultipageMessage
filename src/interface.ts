@@ -19,8 +19,7 @@ export interface AccessOptions {
 
 export interface AccessUrlOptions {
     address: string;
-    type: RequestType;
-    method?: string;
+    type: string;
     data?: {}
 }
 
@@ -43,8 +42,11 @@ export interface webscoketOptions {
 /* -------------- communication -------------- */
 
 export interface ICommunication {
-    ajaxOptions: ajaxOptions;
-    webscoketOptions: webscoketOptions;
+    accessOptions: {
+        [key: string]: AccessUrlOptions
+    };
+    now?: boolean;
+    timerOptions: TimerOptions;
 }
 
 
