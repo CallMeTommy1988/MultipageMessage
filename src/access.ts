@@ -6,7 +6,7 @@
  * @created: 2018.6.2
  */
 
-import { AccessOptions } from "./interface";
+import { AccessOptions, TimerOptions } from "./interface";
 import listeners from "./listeners";
 import factory from "./factory";
 
@@ -22,22 +22,25 @@ abstract class Access extends listeners {
         Access._factorys[name] = renderClass;
     }
 
-    static getFactoryInstance(name: string, options: AccessOptions): Access {
+    static getFactoryInstance(name: string, options: {
+        accessOptions: AccessOptions,
+        timerOptions: TimerOptions
+    }): Access {
         let func = Access._factorys[name];
         if (!func) {
             throw new Error(`Missing render : ${name}`);
         }
 
-        return new func(options);
+        return new func(options.accessOptions, options.timerOptions);
     }
 
     private buildId() {
-        
+
     }
 
     protected static lv: number = -1;
     protected options: AccessOptions;
-    protected id:string;
+    protected id: string;
     constructor(options: AccessOptions) {
 
         super();

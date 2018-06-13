@@ -34,45 +34,38 @@ export class tCommunication {
 
     constructor(options: ICommunication) {
 
-        let currentUrl: AccessUrlOptions;
-        for (let key in options.accessOptions) {
-            let url = options.accessOptions[key];
+        try {
+            let currentUrl: AccessUrlOptions;
+            for (let key in options.accessOptions) {
+                let url = options.accessOptions[key];
 
-            //浏览器支持
-            if ((url.type == "ajax" && !tCommunication.Device.ajax) ||
-                (url.type == "webscoket" && !tCommunication.Device.webscoket)) {
-                return;
-            }
-            
-            if (!currentUrl)
-                currentUrl = url;
-            else {
-                if (lv(currentUrl.type) < lv(url.type))
-                    currentUrl = url;
-            }
-        }
-
-        let access = Access.getFactoryInstance(currentUrl.type, {
-            url: currentUrl,
-            now: options.now
-        });
-
-        if (tCommunication.Device.webscoket && options.accessOptions.url.) {
-
-        }
-        else if (tCommunication.Device.ajax && options.ajaxOptions.url) {
-            new ajaxAccess({
-                url: {
-                    address: options.ajaxOptions.url,
-                    type: RequestType.ajax,
-                    method: options.ajaxOptions.method
+                //浏览器支持
+                if ((url.type == "ajax" && !tCommunication.Device.ajax) ||
+                    (url.type == "webscoket" && !tCommunication.Device.webscoket)) {
+                    return;
                 }
-            }, {});
-        }
-        else {
-            throw new Error(" init error. ");
-        }
 
-        f.addListener()
+                if (!currentUrl)
+                    currentUrl = url;
+                else {
+                    if (lv(currentUrl.type) < lv(url.type))
+                        currentUrl = url;
+                }
+            }
+
+            let access = Access.getFactoryInstance(currentUrl.type,  {
+                accessOptions: {
+                    url: currentUrl,
+                    now: options.now
+                },
+                timerOptions: {}
+            });
+
+            if (currentUrl.success)
+                access.addListener(currentUrl.success);
+        }
+        catch (ex) {
+            throw ex;
+        }
     }
 }

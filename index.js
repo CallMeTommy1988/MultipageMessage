@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var expressWs = require('express-ws')(app);
 var util = require('util');
+var path = require('path');
 
 app.set("views", "./views");
 app.set("view engine", "ejs");
@@ -19,6 +20,7 @@ app.ws('/ws', function (ws, req) {
 });
 
 
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('/', function (req, res) {
   res.render("index", {});

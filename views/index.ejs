@@ -3,25 +3,28 @@
   <title>新标签页</title>
   
   <body id="body">
-    <h2></h2>
-    跨页面
+    <h2>跨页面</h2>
+    <div id="msgContent">
+    </div>
   </body>
 </html>
 
-<script src="dist/tCommunication.js"></script>
+<script src="/tCommunication.js"></script>
 <script>
-    let ws = new WebSocket("ws://localhost:3000/ws");
-      ws.onmessage=function(e){  
-        console.log(e.data);  
-      };  
-      ws.onerror=function(err){  
-        console.log('_error');  
-        console.log(err);  
-      };  
-      ws.onopen=function(){  
-        console.log('_connect')  
-      };  
-      ws.onclose=function(){  
-        console.log('_close');  
-      };  
+
+  let t = new tCommunication({
+    accessOptions: {
+      ajax: {
+        address: "/ajax",
+        type: "ajax",
+        success: (data) => {
+          console.log("收到的消息:");
+          console.log(data);
+        }
+      }
+    },
+    now: true,
+    timerOptions: {}
+  });
+  
 </script>

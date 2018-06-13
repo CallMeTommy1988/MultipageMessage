@@ -1,67 +1,53 @@
 /**
- * @file multiPage.ts 多页面
- 
+ * @file multiPage.ts 多页面的抽象类
+ *
+ * @description 需要生成pageId以便和时间一起确认是否应该
+ * 
  * @author: tommy 
  * 
  * @created: 2018.6.2
  */
 
+import listeners from "./listeners";
 
-/*
-msg_content
-msg_last_time
-*/
+export default abstract class Multipage extends listeners {
 
-export abstract class multipage {
-
-    static readonly msg_last_time = "msg_last_time";
-    static readonly msg_content = "msg_content";
-    static maxLength: number = 20;
-
-    static init() {
-        if (!localStorage)
-            return;
-
-        //调整长度
-        let contents = this.getContent();
-        if (contents.length > this.maxLength) {
-            contents.slice(0, this.maxLength);
-            this.setContent(contents);
-        }
-
-        //注册通知事件
+    constructor(options: { maxTimeInterval: number, dataMaxLength: number }) {
+        super();
     }
 
-    static setContent(data: any[]) {
-        try {
-            localStorage.setItem(this.msg_content, JSON.stringify(data));
-        }
-        catch (ex) {
-            console.log(ex.message);
-        }
+    private _pageId: string;
+
+    public get pageId() {
+        return this._pageId;
     }
 
-    static getContent(): any[] {
-        let content = localStorage.getItem(this.msg_content);
-        try {
-            return JSON.parse(content) as any[];
+    public buildPageId() {
+        if (this.needEable && !this._pageId) {
+            this._pageId = ((new Date()).getTime() + Math.random()).toString();
         }
-        catch (ex) {
-            console.log(ex.message);
-        }
+
+        if (this._pageId)
+            this.setPageId(this._pageId);
     }
 
-    static lastTime(): number {
-        try {
-            let t = localStorage.getItem(this.msg_last_time);
-            if (!t)
-                return 0;
-
-            return parseInt(t);
-        }
-        catch (ex) {
-            console.log(ex.message);
-        }
+    protected setPageId(id: string) {
+        throw new Error("setPageId no function");
     }
 
+    public get needEable(): boolean {
+        throw new Error("needEable no function");
+    }
+
+    public get content(): any[] {
+        throw new Error("get content no function");
+    }
+
+    public set content(data: any[]) {
+        throw new Error("set content no function");
+    }
+
+    public clearContent() {
+        throw new Error("clearContent no function");
+    }
 }

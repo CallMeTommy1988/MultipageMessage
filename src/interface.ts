@@ -20,7 +20,9 @@ export interface AccessOptions {
 export interface AccessUrlOptions {
     address: string;
     type: string;
-    data?: {}
+    data?: {};
+    success?: Function;
+    error?: Function;
 }
 
 export interface ajaxOptions {

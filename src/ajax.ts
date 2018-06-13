@@ -20,8 +20,8 @@ const defaultOptions: ajaxOptions = {
 export function ajax(options: ajaxOptions) {
 
     options = {
-        ...options,
-        ...defaultOptions
+        ...defaultOptions,
+        ...options
     };
 
     let http = new XMLHttpRequest();
